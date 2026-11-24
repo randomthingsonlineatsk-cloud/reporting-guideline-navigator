@@ -84,10 +84,38 @@ words, with a link to the official checklist.
    and searches; diagnostic accuracy and prediction models; economic evaluations, quality
    improvement, qualitative and animal studies.
 
-The later phases add authorship and CRediT, the ICMJE disclosures and statements, publication
-ethics cases, the submission pack, the poster builder, the GPP publication plan, the plain
-language summary hand-off to the Plain Language Lab, the certificate in the Regulatory Skills
-Passport and a step in the pharmolecule Ostrevia lifecycle journey.
+## What Phase 3 added
+
+1. **Authorship** (RG4): six contributors to the GLYDE-3 paper, each judged against the four ICMJE
+   criteria; author or acknowledged; the 14 CRediT roles with lead, equal or supporting; a
+   GPP 2022 medical writing acknowledgement checked for name, qualifications, affiliation, funder
+   and GPP; ORCID check digits (ISO 7064 MOD 11-2; the only iDs shown are ORCID's own documentation
+   example and a copy with a wrong digit); an AI tool proposed as an author. The cases are guest,
+   ghost and gift authorship as the COPE guidance describes them.
+2. **Disclosures and statements** (RG5): the 13 items of the ICMJE Disclosure Form for each author
+   (item 1 with no time limit, items 2 to 13 for the past 36 months), a competing interests summary
+   from the forms, and ten drafted statements for GLYDE-3 to check against the manuscript, the
+   forms, the registry record, the protocol and the cover letter. Six are inconsistent: the
+   funder's role, competing interests, a registration date after the first enrolment, an
+   "undecided" data sharing statement, an AI statement that contradicts the cover letter, and a
+   mistyped registration number.
+3. **Submission pack**: journal fit against eight fictional journals (two with the warning signs of
+   predatory publishing), a cover letter checked for what editors need, and suggested reviewers
+   checked for conflicts.
+4. **Response to reviewers** (RG6): twelve comments on the VERDANT-1 paper. Each response is checked
+   for the point it must address, where the change is and the quoted new text (or a reason for
+   not changing), courtesy, and claiming no more than the data show; each comment has a model
+   answer shown after scoring.
+5. **Publication ethics cases** (RG15): a preprint, an embargo, a predatory journal, duplicate
+   publication, a correction, a dropped outcome, an author added late, and a reviewer using AI.
+6. **Four more lessons** (twelve in all): authorship and CRediT; disclosures, statements and AI use;
+   publication ethics; submitting and answering reviewers.
+
+In every mission, the checks that would point at the answers stay hidden until the first score.
+
+The final phase adds the poster builder, the GPP publication plan, the plain language summary
+hand-off to the Plain Language Lab, the certificate in the Regulatory Skills Passport, a step in the
+pharmolecule Ostrevia lifecycle journey and the classroom mode.
 
 ## Sources (checked 24 and 25 November 2026)
 
@@ -101,6 +129,9 @@ Passport and a step in the pharmolecule Ostrevia lifecycle journey.
 - PRISMA 2020 (BMJ 2021;372:n71): https://eprints.whiterose.ac.uk/173303/1/bmj.n71.full.pdf
 - STARD 2015 (BMJ 2015;351:h5527): https://ora.ox.ac.uk/objects/uuid:9e2399a5-f7c3-4fb1-a522-4ecb50c16ce4/files/mb388597d9127cf9810a97fd3d6208b5b
 - TRIPOD+AI (BMJ 2024, CC BY 4.0): https://epub.ub.uni-muenchen.de/116670/1/bmj-2023-078378.full.pdf
+- ICMJE Recommendations, January 2026 annotated edition: https://www.icmje.org/news-and-editorials/icmje-recommendations_annotated_jan26.pdf
+- CRediT (ANSI/NISO Z39.104-2022): https://casrai.org/credit.html
+- COPE: https://publicationethics.org/
 
 The full list, with the authorship, disclosure and ethics sources for the later phases, is in the
 app spec.

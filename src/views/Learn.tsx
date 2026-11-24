@@ -17,7 +17,7 @@ export default function Learn() {
           <button key={x.id} onClick={() => { setOpen(x.id); setAns({}); setDone(false); window.scrollTo(0, 0) }} aria-current={open === x.id ? 'page' : undefined} className={`w-full text-left rounded border px-3 py-2 text-sm ${open === x.id ? 'border-lab-fda bg-lab-fda-soft/40' : 'border-lab-line hover:border-lab-fda/60'}`}>
             {x.title}{s !== undefined && <Pill tone={s >= QUIZ_PASS ? 'green' : 'amber'} className="ml-2">{`${s}/8`}</Pill>}
           </button>) })}
-        <p className="text-[11px] text-lab-text-muted px-1">More lessons (authorship, disclosures, publication ethics, AI use, publication planning) come with the later phases.</p>
+        <p className="text-[11px] text-lab-text-muted px-1">A lesson on posters and publication planning comes with the final phase.</p>
       </nav>
       <div className="space-y-3">
         <Panel title={l.title} sub={`Checked ${l.checked}.`}>

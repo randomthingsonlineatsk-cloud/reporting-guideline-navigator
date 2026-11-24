@@ -77,6 +77,15 @@ export interface Project {
   mission?: { id: string; startedUtc: string; variant: number; scoredUtc?: string }
   /** Missions RG8 and RG9: the numbers the learner marks as wrong (box id → true). */
   numbers?: Record<string, boolean>
+  /** Phase 3: authorship decisions (RG4), statement flags (RG5), reviewer responses (RG6). */
+  rg4?: { people: Record<string, { criteria: Partial<Record<'c1' | 'c2' | 'c3' | 'c4', boolean>>; author?: boolean; roles: Record<string, 'lead' | 'equal' | 'supporting'> }>; ack: string; ai?: number }
+  rg5?: Record<string, boolean>
+  rg6?: Record<string, string>
+  /** The learner's own contributors, for manuscripts without a mission cast. */
+  people?: { id: string; name: string; did: string }[]
+  /** ICMJE disclosure form entries: author → item number → text. */
+  forms?: Record<string, Record<number, string>>
+  submission?: { journal?: string; cover?: string; reviewers?: string[] }
   history: { utc: string; what: string }[]
 }
 
@@ -90,4 +99,6 @@ export interface Progress {
   missions: Record<string, MissionRun>
   /** Mission RG1's answers: the guideline and extensions chosen for each case. */
   rg1: Record<string, { main: string; also: string[] }>
+  /** Mission RG15's answers. */
+  ethics?: Record<string, number>
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useStore } from '../state'
 import { Btn, Modal, Pill } from './ui'
 import { PLANTED_BY_MISSION } from '../domain/manuscripts2'
+import { scoreRG4, scoreRG5, scoreRG6 } from '../domain/phase3'
 import { mission, record, scoreDesign, scoreRG2, scoreRG3, scoreRG12, type Result } from '../domain/missions'
 
 export default function MissionBar() {
@@ -10,13 +11,13 @@ export default function MissionBar() {
   if (!p?.mission) return null
   const m = mission(p.mission.id)!
   const nums = PLANTED_BY_MISSION[m.id]?.planted.numbers ?? []
-  const score = () => { const r = m.id === 'RG2' ? scoreRG2(p) : m.id === 'RG3' ? scoreRG3(p) : m.id === 'RG12' ? scoreRG12(p) : scoreDesign(p, m.id); rec((g) => record(g, m.id, r)); act((q) => { if (q.mission) q.mission.scoredUtc = new Date().toISOString() }); setRes(r) }
+  const score = () => { const r = m.id === 'RG2' ? scoreRG2(p) : m.id === 'RG3' ? scoreRG3(p) : m.id === 'RG12' ? scoreRG12(p) : m.id === 'RG4' ? scoreRG4(p.rg4 ?? { people: {}, ack: '' }) : m.id === 'RG5' ? scoreRG5(p.rg5 ?? {}) : m.id === 'RG6' ? scoreRG6(p.rg6 ?? {}) : scoreDesign(p, m.id); rec((g) => record(g, m.id, r)); act((q) => { if (q.mission) q.mission.scoredUtc = new Date().toISOString() }); setRes(r) }
   return (
     <div className="mb-3 rounded-lg border border-lab-ema/50 bg-lab-ema-soft/30 p-3 flex flex-wrap gap-3 items-start">
       <div className="flex-1 min-w-64 space-y-1">
         <p className="font-mono text-xs text-lab-ema">Mission {m.id} · {m.title}</p>
         <p className="text-sm">{m.task}</p>
-        <p className="text-xs text-lab-text-muted">Pass: {m.pass}. Score as often as you like; your best score is kept.{m.id !== 'RG1' && m.id !== 'RG3' && !p.mission.scoredUtc ? ' The rule checks that flag weak items stay hidden until your first score.' : ''}</p>
+        <p className="text-xs text-lab-text-muted">Pass: {m.pass}. Score as often as you like; your best score is kept.{!['RG1', 'RG3', 'RG4'].includes(m.id) && !p.mission.scoredUtc ? ' The checks that would point at the answers stay hidden until your first score.' : ''}</p>
         {nums.length > 0 && (
           <fieldset className="mt-2 rounded border border-lab-line p-2">
             <legend className="px-1 text-xs text-lab-text-muted">{m.id === 'RG8' ? 'The flow of studies: tick the number that does not add up' : 'The accuracy figures: recompute each from the 2×2 table and tick the one that is wrong'}</legend>
