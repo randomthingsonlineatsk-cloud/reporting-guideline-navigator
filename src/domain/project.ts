@@ -47,17 +47,20 @@ export function toggleTagPara(p: Project, key: string, para: string) {
 
 export interface Flag { key: string; kind: 'untagged' | 'missing' | 'weak' | 'na-reason' | 'ok'; why: string }
 /** The workspace's flags for one item: what is untagged, missing, weak, or fine. */
-export function flagOf(p: Project, m: Manuscript, key: string): Flag {
+/** In a mission the rule checks stay hidden until the first score, so the flags cannot point at the
+ * planted gaps; they are shown afterwards to explain the result. */
+export const rulesHidden = (p: Project) => !!p.mission && !p.mission.scoredUtc
+export function flagOf(p: Project, m: Manuscript, key: string, rules = !rulesHidden(p)): Flag {
   const t = tagOf(p, key)
   if (!t.status) return { key, kind: 'untagged', why: 'Not looked at yet: tag the paragraphs that report it, or mark it missing.' }
   if (t.status === 'na') return t.reason?.trim() ? { key, kind: 'ok', why: `Not applicable: ${t.reason}` } : { key, kind: 'na-reason', why: 'Give the reason it does not apply.' }
   if (t.status === 'missing') return { key, kind: 'missing', why: 'Marked as not reported: the manuscript needs it.' }
   if (!t.paras.length) return { key, kind: 'weak', why: t.status === 'partly' ? 'Marked as partly reported: tag the paragraph that reports part of it, and say in the note what is missing.' : 'Marked as reported, but no paragraph is tagged.' }
   const text = t.paras.map((id) => m.paras.find((x) => x.id === id)?.text ?? '').join(' ')
-  const r = checkRule(key, text)
+  const r = rules ? checkRule(key, text) : null
   if (r && !r.ok) return { key, kind: 'weak', why: r.why }
   if (t.status === 'partly') return { key, kind: 'weak', why: 'Marked as partly reported.' }
-  return { key, kind: 'ok', why: r ? r.why : 'Tagged as reported.' }
+  return { key, kind: 'ok', why: r ? r.why : rules ? 'Tagged as reported.' : 'Tagged as reported. In a mission the rule checks are shown after your first score.' }
 }
 
 export function coverage(p: Project, m: Manuscript) {

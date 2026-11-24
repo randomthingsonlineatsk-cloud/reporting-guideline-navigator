@@ -149,6 +149,7 @@ export const DIAG_PLANTED: Planted = {
     'd-anal': 'We estimated sensitivity and specificity with Wilson 95% confidence intervals. Participants without a patch test reading were excluded. A prespecified subgroup analysis compared participants with and without atopic dermatitis.',
     'd-size': '',
     'd-flow': `Of 231 eligible patients, 214 agreed and were tested; 14 were excluded, leaving ${N2} for the analysis (Figure 1). Their median age was 38 years and 61% were women (Table 1). ${pos} had allergic contact dermatitis, mostly to preservatives and fragrances, and the other ${neg} had irritant dermatitis (71) or atopic hand eczema (49).`,
+    'd-abstract': `In ${N2} consecutive adults with suspected allergic contact dermatitis of the hands, the CX-7 swab assay had a sensitivity of ${f1(sens)}% (95% CI ${f1(sl)} to ${f1(su)}) and a specificity of ${wrongSpec}% (95% CI ${f1(pl)} to ${f1(pu)}) against patch testing. The assay could help decide who needs patch testing.`,
     'd-2x2': `CX-7 was positive in ${TWO.tp} of the ${pos} participants with a positive patch test (true positives) and in ${TWO.fp} of the ${neg} without (false positives); there were ${TWO.fn} false negatives and ${TWO.tn} true negatives (Table 2). Sensitivity was ${f1(sens)}% (95% CI ${f1(sl)} to ${f1(su)}) and specificity ${wrongSpec}% (95% CI ${f1(pl)} to ${f1(pu)}).`,
     'd-ae': '',
     'd-other': 'The protocol is in the supplement. The study was funded by a research grant from the Western Coast Medical College; the manufacturer supplied the kits free of charge and had no role in the design, analysis or report.',
@@ -157,7 +158,7 @@ export const DIAG_PLANTED: Planted = {
     { id: 'n1', label: 'Participants with the target condition', shown: String(pos), wrong: false, why: `${TWO.tp} true positives + ${TWO.fn} false negatives = ${pos}.` },
     { id: 'n2', label: 'Participants without it', shown: String(neg), wrong: false, why: `${TWO.fp} + ${TWO.tn} = ${neg}; 71 irritant + 49 atopic = 120.` },
     { id: 'n3', label: 'Sensitivity', shown: `${f1(sens)}%`, wrong: false, why: `${TWO.tp} ÷ ${pos} = ${f1(sens)}%.` },
-    { id: 'n4', label: 'Specificity', shown: `${wrongSpec}%`, wrong: true, why: `${TWO.tn} ÷ ${neg} = ${f1(spec)}%, not ${wrongSpec}%. Its confidence interval (${f1(pl)} to ${f1(pu)}) was left unchanged, so it no longer matches.` },
+    { id: 'n4', label: 'Specificity', shown: `${wrongSpec}%`, wrong: true, why: `${TWO.tn} ÷ ${neg} = ${f1(spec)}%, not ${wrongSpec}%, in both the abstract and the results. Its confidence interval (${f1(pl)} to ${f1(pu)}) was left unchanged, so it no longer matches.` },
     { id: 'n5', label: 'Analysed', shown: String(N2), wrong: false, why: `214 tested − 14 excluded = ${N2}.` },
   ],
 }

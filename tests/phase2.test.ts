@@ -59,7 +59,7 @@ describe('missions RG7 to RG11', () => {
       const x = PLANTED_BY_MISSION[id], m = PHASE2_MANUSCRIPTS.find((q) => q.id === x.manuscript)!
       const p = createProject(m.id, who, { mission: { id, startedUtc: '', variant: 0 } }); p.guidelines = x.guidelines as never
       const shown = tagAll(p, m)
-      const flagged = allItems(m.guidelines).filter((y) => flagOf(p, shown, y.key).kind !== 'ok').map((y) => y.key)
+      const flagged = allItems(m.guidelines).filter((y) => flagOf(p, shown, y.key, true).kind !== 'ok').map((y) => y.key)
       // The rules flag nothing that was not planted; some planted gaps only a reader can judge.
       expect(flagged.filter((k) => !plantedKeys(id).includes(k))).toEqual([])
       expect(flagged.length / plantedKeys(id).length).toBeGreaterThanOrEqual(0.7)
@@ -75,6 +75,15 @@ describe('missions RG7 to RG11', () => {
       expect(scoreDesign(q, id).passed).toBe(false)
     })
   }
+  test('in a mission the rule checks stay hidden until the first score', () => {
+    const x = PLANTED_BY_MISSION.RG9, m = PHASE2_MANUSCRIPTS.find((q) => q.id === x.manuscript)!
+    const p = createProject(m.id, who, { mission: { id: 'RG9', startedUtc: '', variant: 0 } })
+    const shown = tagAll(p, m)
+    expect(allItems(m.guidelines).filter((y) => flagOf(p, shown, y.key).kind === 'weak')).toEqual([])
+    p.mission!.scoredUtc = 'now'
+    expect(allItems(m.guidelines).some((y) => flagOf(p, shown, y.key).kind === 'weak')).toBe(true)
+    expect(shown.paras.find((q) => q.id === 'd-abstract')!.text).toContain('specificity of 91.2%')
+  })
   test('RG8 and RG9 need the wrong number too', () => {
     for (const id of ['RG8', 'RG9']) {
       const x = PLANTED_BY_MISSION[id]

@@ -74,7 +74,7 @@ export interface Project {
   picker?: Record<string, string>
   tags: Record<string, Tag>
   abstracts: Abstract[]
-  mission?: { id: string; startedUtc: string; variant: number }
+  mission?: { id: string; startedUtc: string; variant: number; scoredUtc?: string }
   /** Missions RG8 and RG9: the numbers the learner marks as wrong (box id → true). */
   numbers?: Record<string, boolean>
   history: { utc: string; what: string }[]

@@ -56,7 +56,7 @@ describe('mission RG2 (planted VERDANT-1)', () => {
     const m = planted(VERDANT1, VERDANT1_PLANTED.edits)
     const p = createProject('verdant-1', who, { mission: { id: 'RG2', startedUtc: '', variant: 0 } })
     tagFromKey(p, VERDANT1, (k) => k.startsWith('consort-2025:'))
-    const bad = allItems(['consort-2025']).filter((x) => { const f = flagOf(p, m, x.key); return f.kind !== 'ok' }).map((x) => x.i.id)
+    const bad = allItems(['consort-2025']).filter((x) => { const f = flagOf(p, m, x.key, true); return f.kind !== 'ok' }).map((x) => x.i.id)
     // Items whose paragraph was deleted are untagged-missing; weakened ones fail their rule, except
     // those only a reader can judge (26: one outcome without its interval; 30: no limitations).
     expect(bad.sort()).toEqual(['10', '2', '21c', '23a', '3', '4', '5b', '8', '16a', '17a', '19', '20b', '15', '30'].sort())

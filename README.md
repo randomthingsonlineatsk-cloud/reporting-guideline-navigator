@@ -72,10 +72,15 @@ words, with a link to the official checklist.
    computed from the same inputs as the text.
 3. **Six practice excerpts**: a non-inferiority trial, a cluster trial, an animal study, a
    prediction model, a quality improvement project and an interview study.
-4. **Number checks** in RG8 and RG9: tick the count in the flow of studies that does not add up,
-   or the accuracy figure that does not follow from the 2×2 table.
-5. **Your own .docx**: read in the browser (paragraphs and headings), as well as pasted text.
-6. **Four more lessons** with quizzes: observational studies and case reports; systematic reviews
+4. **Number checks** in RG8 and RG9: tick only the count in the flow of studies that does not add
+   up, or only the accuracy figure that does not follow from the 2×2 table (in RG9 the wrong
+   specificity is in both the abstract and the results). Ticking a correct number fails the check.
+5. **Rule checks hidden in missions** until the first score, so the flags cannot point at the
+   planted gaps; after scoring they explain the result. Of the 50 items planted across RG7 to RG11,
+   the rules can flag 48; the other two (whether reviewers screened independently in RG8, and the
+   patient's history in RG10) need a reader's judgement.
+6. **Your own .docx**: read in the browser (paragraphs and headings), as well as pasted text.
+7. **Four more lessons** with quizzes: observational studies and case reports; systematic reviews
    and searches; diagnostic accuracy and prediction models; economic evaluations, quality
    improvement, qualitative and animal studies.
 
