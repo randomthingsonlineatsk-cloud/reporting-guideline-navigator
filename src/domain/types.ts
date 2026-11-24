@@ -92,6 +92,13 @@ export interface Project {
   plan?: import('./phase4').PlanRow[]
   planFlags?: Record<string, string>
   plsReturn?: Record<string, unknown>
+  /** The learner's own manuscript pack: byline, registration from the Protocol Builder, statements,
+   *  title page and the revision record. */
+  byline?: import('./manuscriptpack').Byline
+  registration?: import('./manuscriptpack').Registration
+  statements?: import('./manuscriptpack').Statements
+  titlePage?: import('./manuscriptpack').TitlePageInfo
+  revisions?: import('./manuscriptpack').Revision[]
   history: { utc: string; what: string }[]
 }
 

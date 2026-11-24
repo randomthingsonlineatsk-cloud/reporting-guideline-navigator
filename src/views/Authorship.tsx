@@ -4,6 +4,7 @@ import { useStore } from '../state'
 import { Btn, Panel, Pill, TextArea, inputCls } from './ui'
 import { CREDIT_ROLES, ICMJE_CRITERIA, RG4_AI_QUESTION, RG4_CONTRIBUTORS, checkWritingAck, orcidValid, type Criterion, type Degree } from '../domain/phase3'
 import { download } from '../domain/store'
+import { BylinePanel } from './Pack'
 
 type Person = { id: string; name: string; role: string; orcid: string; did: string }
 
@@ -75,6 +76,7 @@ export default function Authorship() {
         <p className="text-sm"><b>Acknowledged:</b> {people.filter((x) => a.people[x.id]?.author === false).map((x) => x.name).join('; ') || '—'}</p>
         <pre className="text-xs whitespace-pre-wrap text-lab-text-muted">{credit || 'No CRediT roles yet.'}</pre>
       </Panel>
+      {!p!.mission && <BylinePanel />}
     </div>
   )
 }

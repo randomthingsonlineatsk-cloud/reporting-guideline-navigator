@@ -139,6 +139,27 @@ In every mission, the checks that would point at the answers stay hidden until t
 
 The QR code is drawn with qrcode-generator (MIT).
 
+## Your own manuscript pack (added after Phase 4)
+
+In any project that is not a mission:
+
+1. **Author order and group** (Authorship page): put the authors in order with their affiliations,
+   choose the corresponding author (email and postal address), and name a study group in the byline
+   (authors and the group, authors for the group, or the group alone) with its non-author
+   collaborators listed by name, place and role.
+2. **Statements** (Disclosures page): registration, funding, ethics, data sharing and AI use, with
+   live rules. Registration after the first enrolment is flagged until it is explained; an
+   "undecided" data sharing statement is refused; an AI tool listed as an author is refused.
+3. **Registration from the Protocol Builder**: open its project file or application bundle and the
+   NCT, EU CT or CTRI number is read from the protocol, so a mistyped number in the statements or
+   the abstract is caught.
+4. **Title page** (Submission page): title, running title, byline with numbered affiliations, the
+   corresponding author, word counts taken from the manuscript, tables, figures, keywords and the
+   registration, downloaded as HTML.
+5. **Revision record** (Submission page): paste the reviewers' comments and each becomes a numbered
+   row; every row says whether the paper changed, where, and quotes the new text, or gives the
+   reason. Downloads as a table for the resubmission.
+
 ## Sources (checked 24 and 25 November 2026)
 
 - CONSORT 2025 statement, PLOS Medicine 2025 (CC BY 4.0): https://pmc.ncbi.nlm.nih.gov/articles/PMC11996237/

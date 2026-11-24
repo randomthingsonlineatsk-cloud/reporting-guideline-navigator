@@ -1,6 +1,7 @@
 import type { Project } from '../domain/types'
 import { useStore } from '../state'
 import { Btn, Panel, Pill, Table, TextArea } from './ui'
+import { RevisionPanel, TitlePagePanel } from './Pack'
 import { JOURNALS, REVIEWERS, RG6_COMMENTS, checkCover, checkResponse, journalFit } from '../domain/phase3'
 import { manuscriptOf } from '../domain/project'
 import { download } from '../domain/store'
@@ -61,6 +62,7 @@ export default function Submission() {
           <Btn tone="grey" onClick={() => download('response-to-reviewers.txt', RG6_COMMENTS.map((c, i) => `Reviewer ${c.reviewer}, comment ${i + 1}: ${c.text}\nResponse: ${responses[c.id] ?? ''}`).join('\n\n'), 'text/plain')}>Download the response letter</Btn>
         </Panel>
       )}
+      {!p!.mission && <><TitlePagePanel /><RevisionPanel /></>}
     </div>
   )
 }

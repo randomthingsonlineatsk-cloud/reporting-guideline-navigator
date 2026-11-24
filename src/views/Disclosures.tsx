@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useStore } from '../state'
 import { Panel, Pill, inputCls } from './ui'
+import { StatementsPanel } from './Pack'
 import { DISCLOSURE_ITEMS, RG5_FORMS, RG5_SOURCES, RG5_STATEMENTS, RG4_CONTRIBUTORS } from '../domain/phase3'
 
 export default function Disclosures() {
@@ -49,6 +50,7 @@ export default function Disclosures() {
           </div>
         </Panel>
       )}
+      {!p!.mission && <StatementsPanel />}
     </div>
   )
 }
