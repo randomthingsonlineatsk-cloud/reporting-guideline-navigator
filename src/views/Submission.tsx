@@ -48,7 +48,7 @@ export default function Submission() {
             {RG6_COMMENTS.map((c, i) => {
               const r = responses[c.id] ?? '', full = r.trim() ? checkResponse(c, r) : null
               // In the mission, the checks that would reveal the answer key (key terms, whether to refuse) appear after the first score.
-              const chk = full && hide ? { ...full, checks: full.checks.filter((x) => !/^Mentions|^Gives a reason/.test(x.label)) } : full
+              const chk = full && hide ? { ...full, checks: full.checks.filter((x) => !/^Mentions|^Gives a reason|^Says where|^Quotes/.test(x.label)) } : full
               return (
                 <li key={c.id} className="space-y-1">
                   <p className="text-sm"><Pill>{`Reviewer ${c.reviewer}`}</Pill> <b>{i + 1}.</b> {c.text}</p>
