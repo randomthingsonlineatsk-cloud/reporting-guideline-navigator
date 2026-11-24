@@ -1,0 +1,91 @@
+// Shared types. Every saved object carries userId and classId so that the classroom mode can be
+// added later without a migration.
+
+export type GuidelineId =
+  | 'consort-2025' | 'consort-abstracts' | 'consort-harms' | 'consort-ni' | 'consort-cluster'
+  | 'spirit-2025' | 'strobe' | 'prisma-2020' | 'prisma-s' | 'prisma-scr' | 'stard-2015' | 'stard-ai'
+  | 'care' | 'arrive-2' | 'tripod-ai' | 'tripod-llm' | 'tripod-cluster' | 'tripod-srma' | 'cheers-2022'
+  | 'squire-2' | 'coreq' | 'tidier' | 'trend'
+
+export interface Item {
+  /** The item number as the guideline numbers it (1a, 17b, H3…). */
+  id: string
+  section: string
+  /** The item in this app's own words (never the guideline's wording). */
+  text: string
+  /** What a reader looks for, in one line. */
+  look?: string
+  /** Only when it applies (for example site eligibility). Not applicable is accepted with a reason. */
+  ifApplicable?: boolean
+  /** New or revised in this version. */
+  change?: 'new' | 'revised'
+}
+
+export interface Guideline {
+  id: GuidelineId
+  name: string
+  /** Version label and year. */
+  version: string
+  /** What it covers. */
+  covers: string
+  /** The official checklist page (items are paraphrased here, so the learner checks the wording there). */
+  url: string
+  /** Whether the app has a full checklist for it yet (Phase 1: CONSORT 2025 and its abstract and harms items, SPIRIT 2025). */
+  built: boolean
+  items: Item[]
+  note?: string
+  /** Licence of the official wording, for the record (the app paraphrases every item whatever the licence). */
+  licence: string
+}
+
+export interface Para { id: string; section: string; heading?: string; text: string }
+export interface Manuscript {
+  id: string
+  study: string
+  kind: 'article' | 'protocol'
+  title: string
+  journal: string
+  /** Guidelines the answer key covers. */
+  guidelines: GuidelineId[]
+  paras: Para[]
+  /** Clean answer key: for each `${guideline}:${item}`, the paragraphs that report it (empty = not reported). */
+  key: Record<string, string[]>
+  /** Items accepted as not applicable in this manuscript. */
+  na: string[]
+  note?: string
+}
+
+export type Status = 'reported' | 'partly' | 'missing' | 'na'
+export interface Tag { paras: string[]; status: Status | ''; reason?: string; note?: string }
+
+export interface Abstract { venue: string; text: string; updatedUtc: string }
+
+export interface Project {
+  id: string
+  name: string
+  userId: string
+  classId: string
+  createdUtc: string
+  updatedUtc: string
+  manuscriptId: string
+  /** The learner's own text (when manuscriptId is 'own'). */
+  ownText?: string
+  guidelines: GuidelineId[]
+  picker?: Record<string, string>
+  tags: Record<string, Tag>
+  abstracts: Abstract[]
+  mission?: { id: string; startedUtc: string; variant: number }
+  history: { utc: string; what: string }[]
+}
+
+export interface MissionRun { score: number; passed: boolean; utc: string; detail: string[] }
+export interface Progress {
+  id: 'me'
+  name: string
+  userId: string
+  classId: string
+  quizzes: Record<string, { score: number; utc: string }>
+  missions: Record<string, MissionRun>
+  /** Mission RG1's answers: the guideline and extensions chosen for each case. */
+  rg1: Record<string, { main: string; also: string[] }>
+}

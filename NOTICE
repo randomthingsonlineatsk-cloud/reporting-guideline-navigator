@@ -1,0 +1,24 @@
+Reporting Guideline Navigator
+Copyright 2026 Khan Gulrez Shagufa Fazal Ahmed
+
+Original project: https://github.com/randomthingsonlineatsk-cloud/reporting-guideline-navigator
+
+This product includes software developed by Khan Gulrez Shagufa Fazal Ahmed.
+If you redistribute or build on this work, you must keep this NOTICE file
+and the LICENSE (Apache License 2.0).
+
+The studies HRP-301 (VERDANT-1) and GLV-12-301 (GLYDE-3), the products lumiravostat (Ostrevia)
+and GLV-12 (Glyvantra), the sponsors, authors, journals, congresses, registration dates and all
+results are fictional. The study outputs in src/data were produced by the reference programs of the
+TLF Programming Lab and the protocols by the Protocol Builder (both by the same author and under the
+same licence, at https://github.com/randomthingsonlineatsk-cloud/), copied from the CSR & Narrative
+Studio.
+
+The reporting guidelines (CONSORT 2025, CONSORT for Abstracts, CONSORT Harms 2022, SPIRIT 2025 and
+the others the picker names) and the ICMJE Recommendations are named for education. Every checklist
+item is written in this app's own words; the official wording is on each guideline's own site, and
+copyright in it stays with its publishers. Nothing in the app is editorial, legal or regulatory
+advice.
+
+The app is not a validated system. Everything stays in the browser; there is no AI service: all
+checks and scores are by written rules.
