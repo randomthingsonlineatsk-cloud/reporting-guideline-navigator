@@ -26,7 +26,7 @@ export default function Home({ onOpen }: { onOpen: () => void }) {
     if (id === 'RG3') p.guidelines = ['consort-2025', 'consort-abstracts']
     if (id === 'RG2') p.guidelines = ['consort-2025']
     if (PLANTED_BY_MISSION[id]) p.guidelines = PLANTED_BY_MISSION[id].guidelines as GuidelineId[]
-    open(p); go(id === 'RG3' ? 'abstract' : id === 'RG4' ? 'authorship' : id === 'RG5' ? 'disclosures' : id === 'RG6' ? 'submission' : 'workspace')
+    open(p); go(id === 'RG3' ? 'abstract' : id === 'RG4' ? 'authorship' : id === 'RG5' ? 'disclosures' : id === 'RG6' ? 'submission' : id === 'RG13' ? 'poster' : id === 'RG14' ? 'plan' : id === 'RG16' ? 'pls' : 'workspace')
   }
   return (
     <div className="space-y-4">
@@ -34,7 +34,7 @@ export default function Home({ onOpen }: { onOpen: () => void }) {
         <div className="flex flex-wrap gap-2"><Btn tone="solid" onClick={() => setPage('picker')}>Which guideline? Open the picker</Btn><Btn tone="grey" onClick={() => setPage('learn')}>Learn the guidelines</Btn></div>
       </Panel>
 
-      <Panel title="Missions" sub="Scored by written rules against an answer key. Thirteen are open now; the last three arrive with the final phase of the build.">
+      <Panel title="Missions" sub="Scored by written rules against an answer key. All sixteen are open. Pass the core missions and the quizzes for the certificate.">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {MISSIONS.map((m) => {
             const run = progress.missions[m.id], ok = available(m)

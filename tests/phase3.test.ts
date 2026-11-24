@@ -62,4 +62,4 @@ test('the predatory journals fail the fit check and a suitable one passes', () =
   expect(journalFit(JOURNALS.find((j) => j.id === 'j1')!, art).every((f) => f.ok)).toBe(true)
   expect(checkCover('Dear Editor, we submit our randomised trial (NCT99930101). It has not been published elsewhere; an abstract was presented at a congress. Competing interests are declared. All authors approved it. No AI tools were used.').every((c) => c.ok)).toBe(true)
 })
-test('twelve lessons, eight questions each', () => { expect(LESSONS).toHaveLength(12); for (const l of LESSONS) expect(l.quiz).toHaveLength(8) })
+test('thirteen lessons, eight questions each', () => { expect(LESSONS).toHaveLength(13); for (const l of LESSONS) expect(l.quiz).toHaveLength(8) })

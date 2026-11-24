@@ -21,13 +21,13 @@ export const MISSIONS: Mission[] = [
   { id: 'RG10', title: 'Case report', core: false, phase: 2, manuscript: 'zoster-case', task: 'A draft of the herpes zoster case report has lost or weakened 8 CARE items. Find them.', pass: '7 of 8 found' },
   { id: 'RG11', title: 'Economic evaluation', core: false, phase: 2, manuscript: 'ostrevia-cua', task: 'A draft of the Ostrevia cost-utility analysis has lost or weakened 11 CHEERS 2022 items. Find them.', pass: '9 of 11 found' },
   { id: 'RG12', title: 'SPIRIT check of the protocol', core: false, phase: 1, manuscript: 'hrp-301-protocol', task: 'Check the Protocol Builder\'s VERDANT-1 protocol (version 2.0) against SPIRIT 2025, and mark the items it leaves out or only partly reports.', pass: '4 of the 5 gaps found, at most 2 false alarms' },
-  { id: 'RG13', title: 'Build the poster', core: false, phase: 4, task: 'A VERDANT-1 poster for a fictional congress.', pass: 'All required elements' },
-  { id: 'RG14', title: 'Plan the publications', core: false, phase: 4, task: 'Find the gaps in a draft Ostrevia publication plan.', pass: 'All found' },
+  { id: 'RG13', title: 'Build the poster', core: false, phase: 4, manuscript: 'verdant-1', task: 'Build the VERDANT-1 poster for the Lantern Dermatology Congress 2027: within its word and text-size rules, with three key messages, a figure, a QR code, the disclosures and the writing acknowledgement. The results were first shown at the Nordbay Dermatology Meeting.', pass: 'All 12 required elements' },
+  { id: 'RG14', title: 'Plan the publications', core: false, phase: 4, manuscript: 'verdant-1', task: 'Review the draft GPP publication plan for Ostrevia and name the gap in each publication that has one: order, encores, missing results, authorship and writing support.', pass: 'All 5 gaps named, no clean row flagged' },
   { id: 'RG15', title: 'Ethics cases', core: false, phase: 3, task: 'Eight cases: a preprint, an embargo, a predatory journal, duplicate publication, a correction, a dropped result, a late author and a reviewer using AI.', pass: '6 of 8' },
-  { id: 'RG16', title: 'Plain language summary', core: false, phase: 4, task: 'Prepare the VERDANT-1 summary and hand it to the Plain Language Lab.', pass: 'Accepted' },
+  { id: 'RG16', title: 'Plain language summary', core: false, phase: 4, manuscript: 'verdant-1', task: 'Send the VERDANT-1 article to the Plain Language Lab, write its plain language summary there, and bring the finished summary back for the submission pack.', pass: 'Accepted: written from this article, every Plain Language Lab check passed' },
 ]
 export const mission = (id: string) => MISSIONS.find((m) => m.id === id)
-export const PHASE_NOW = 3
+export const PHASE_NOW = 4
 export const available = (m: Mission) => m.phase <= PHASE_NOW
 
 export interface Result { score: number; passed: boolean; detail: string[] }

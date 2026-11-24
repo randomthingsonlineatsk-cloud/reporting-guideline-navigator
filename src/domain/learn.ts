@@ -251,5 +251,25 @@ export const LESSONS: Lesson[] = [
       { q: 'A journal\'s word limit is 2,500 and your paper is 3,400 words. You…', options: ['submit anyway', 'shorten it or choose a journal that fits', 'remove the methods', 'put the results in a supplement only'], answer: 1, why: 'Fit the journal\'s limits.' },
     ],
   },
+  {
+    id: 'posters', title: 'Posters, publication plans and plain language summaries', checked: '24 November 2026',
+    sources: [{ label: 'GPP 2022 (Annals of Internal Medicine, 2022), on PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov/36037471/' }, { label: 'ISMPP: GPP 2022 guidelines', url: 'https://www.ismpp.org/gpp-2022' }],
+    body: [
+      'A congress poster follows the congress rules: size, word count and text that can be read from a distance. It carries the title, authors and affiliations, the methods and results in brief, a few key messages, the funding and disclosures, and an acknowledgement of any writing support. A QR code can point to the full data or the article. A poster already shown at another meeting is an encore and must say so.',
+      'Good Publication Practice (GPP 2022) covers publications of company-sponsored research. A publication plan lists every planned publication, its data, venue, timing, authors and writing support, and is overseen by a steering committee. All results are published, whatever they show, including trials stopped early or with negative results.',
+      'Order matters: the primary results come before secondary or subgroup analyses, so readers see the main findings first. Authors are agreed early, using the ICMJE criteria, before writing starts, never chosen by the sponsor after drafting. Writing support is acknowledged with who provided it and who paid for it; an undisclosed agency is not acceptable.',
+      'A plain language summary tells patients and the public what a study found, in short sentences and everyday words, with the same facts as the article: who took part, what was tested, the main results, the side effects, and who paid. It claims no more than the article does and says where to read the article.',
+    ],
+    quiz: [
+      { q: 'A poster shown at an earlier meeting and presented again must…', options: ['use a new title', 'be labelled as an encore', 'drop the authors', 'add new data'], answer: 1, why: 'Encores are identified.' },
+      { q: 'Which belongs on a poster sponsored by a company?', options: ['the funding and disclosures', 'the sponsor\'s share price', 'only the positive results', 'no authors'], answer: 0, why: 'Funding, disclosures and writing support are shown.' },
+      { q: 'Under GPP 2022, a trial stopped early with no benefit…', options: ['is not published', 'is still published', 'is published only as a poster', 'waits until a positive trial'], answer: 1, why: 'All results are published.' },
+      { q: 'The secondary outcomes paper is planned before the primary results. That is…', options: ['fine', 'a gap: primary results come first', 'required', 'only an issue for posters'], answer: 1, why: 'Primary results first.' },
+      { q: 'Authors to be chosen by the sponsor after drafting. That…', options: ['follows GPP 2022', 'breaks it: authors are agreed before writing, by the ICMJE criteria', 'is fine for secondary papers', 'is up to the agency'], answer: 1, why: 'Authorship is agreed early.' },
+      { q: 'Writing support from an "undisclosed agency"…', options: ['is acceptable', 'must be named, with its funding', 'is only an issue in journals', 'can be thanked in general'], answer: 1, why: 'Writing support is disclosed with its funder.' },
+      { q: 'A plain language summary should…', options: ['add new results', 'report the same facts as the article, in plain words', 'leave out side effects', 'promote the medicine'], answer: 1, why: 'Same facts, plain words.' },
+      { q: 'What does a publication plan list for each publication?', options: ['only the journal', 'the data, venue, timing, authors and writing support', 'the press release', 'the price of the medicine'], answer: 1, why: 'The plan covers each publication in full.' },
+    ],
+  },
 ]
 export const QUIZ_PASS = 6

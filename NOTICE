@@ -27,3 +27,7 @@ advice.
 
 The app is not a validated system. Everything stays in the browser; there is no AI service: all
 checks and scores are by written rules.
+
+Third-party software:
+- qrcode-generator (https://github.com/kazuhikoarase/qrcode-generator), MIT License,
+  Copyright (c) 2009 Kazuhiko Arase. Used to draw the poster's QR code.

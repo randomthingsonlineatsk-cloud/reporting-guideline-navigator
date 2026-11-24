@@ -86,6 +86,12 @@ export interface Project {
   /** ICMJE disclosure form entries: author → item number → text. */
   forms?: Record<string, Record<number, string>>
   submission?: { journal?: string; cover?: string; reviewers?: string[] }
+  /** Phase 4: the congress poster (RG13), the publication plan and its gap flags (RG14), and the
+   *  summary brought back from the Plain Language Lab (RG16). */
+  poster?: import('./phase4').Poster
+  plan?: import('./phase4').PlanRow[]
+  planFlags?: Record<string, string>
+  plsReturn?: Record<string, unknown>
   history: { utc: string; what: string }[]
 }
 

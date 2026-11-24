@@ -1,0 +1,7 @@
+// A Fennick Journal abstract of the VERDANT-1 first cohort that passes every check.
+export const GOOD = `Lumiravostat versus placebo in chronic hand eczema: first cohort of the randomised VERDANT-1 trial
+Background: We assessed whether lumiravostat, an oral STRK1 inhibitor, improves moderate to severe chronic hand eczema not controlled by topical corticosteroids.
+Methods: In this double-blind, placebo-controlled, parallel-group trial at 4 sites, adults aged 18 to 75 years with an IGA-CHE score of 3 or 4 were randomised 1:1:1 through an interactive response system to lumiravostat 10 mg, lumiravostat 25 mg or placebo once daily for 16 weeks. Participants, investigators and assessors were blinded. The primary outcome was IGA-CHE treatment success at week 16.
+Results: 45 participants were randomised (14 to 10 mg, 16 to 25 mg, 15 to placebo) and all were analysed; recruitment to the trial continues. Treatment success occurred in 3 of 14 (21.4%), 5 of 16 (31.3%) and 3 of 15 (20.0%); differences from placebo were 1.4 (95% CI -28.1, 31.0) and 11.3 (95% CI -19.2, 41.7) percentage points. Adverse events occurred in 57.1%, 62.5% and 53.3%; 4 participants had a serious adverse event.
+Conclusions: In this first cohort, lumiravostat did not clearly improve treatment success; the full trial will answer the question.
+Trial registration: ClinicalTrials.gov NCT99930101. Funding: Halcyon Ridge Pharmaceuticals.`

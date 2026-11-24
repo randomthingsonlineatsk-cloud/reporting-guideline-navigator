@@ -113,9 +113,31 @@ words, with a link to the official checklist.
 
 In every mission, the checks that would point at the answers stay hidden until the first score.
 
-The final phase adds the poster builder, the GPP publication plan, the plain language summary
-hand-off to the Plain Language Lab, the certificate in the Regulatory Skills Passport, a step in the
-pharmolecule Ostrevia lifecycle journey and the classroom mode.
+## What Phase 4 added
+
+1. **Congress poster** (RG13): an A0 poster for the (fictional) Lantern Dermatology Congress 2027,
+   with the congress's word and text-size rules, three key messages, the HECSI figure drawn from
+   the TLF Lab's data frame, a QR code to the app's own VERDANT-1 study page (`#/study/HRP-301`),
+   the disclosures, the GPP 2022 writing acknowledgement and the encore label. Twelve checks;
+   every number must be in the study outputs. Downloads as HTML to print to PDF at A0.
+2. **Publication plan** (RG14): a GPP 2022 plan for Ostrevia across congresses and journals, with
+   five planted gaps to name (secondary results before the primary, authors chosen after drafting,
+   an unlabelled encore, a stopped trial left unpublished, undisclosed writing support). Downloads
+   as an HTML plan and a CSV tracker.
+3. **Plain language summary** (RG16): the VERDANT-1 article goes to the Plain Language Lab as a file,
+   the summary is written there against its checks, and the finished summary comes back here,
+   where it is accepted only if it was written from this article and every check passed.
+4. **Certificate**: the six core missions and the thirteen quizzes, with a distinction for all
+   sixteen missions. The code (prefix `RG-`) is verified on the pharmolecule Regulatory Skills
+   Passport.
+5. **Ostrevia journey, step 13** (Publish the primary results): the Export page of a VERDANT-1
+   project gives the hand-off the pharmolecule journey page checks.
+6. **Classroom mode**: on the shared classroom server (`/rg/v1`, `rg_` tables). Instructors set
+   missions as assignments; students send their latest run; instructors re-score it in their own
+   browser with this app's scoring.
+7. **A thirteenth lesson**: posters, publication plans and plain language summaries.
+
+The QR code is drawn with qrcode-generator (MIT).
 
 ## Sources (checked 24 and 25 November 2026)
 
@@ -132,6 +154,8 @@ pharmolecule Ostrevia lifecycle journey and the classroom mode.
 - ICMJE Recommendations, January 2026 annotated edition: https://www.icmje.org/news-and-editorials/icmje-recommendations_annotated_jan26.pdf
 - CRediT (ANSI/NISO Z39.104-2022): https://casrai.org/credit.html
 - COPE: https://publicationethics.org/
+- GPP 2022 (Annals of Internal Medicine 2022), PubMed 36037471: https://pubmed.ncbi.nlm.nih.gov/36037471/
+- ISMPP, GPP 2022 guidelines: https://www.ismpp.org/gpp-2022
 
 The full list, with the authorship, disclosure and ethics sources for the later phases, is in the
 app spec.
@@ -139,8 +163,8 @@ app spec.
 ## Data, privacy and checks
 
 Everything stays in the browser (IndexedDB). There is no AI service: every check and score is a
-written rule. Each saved object carries a user ID and a class ID for the classroom mode that comes
-later. The app works offline after the first visit.
+written rule. Each saved object carries a user ID and a class ID. Only the optional classroom mode talks to a
+server, and only when you join or create a class. The app works offline after the first visit.
 
 ## Develop
 
