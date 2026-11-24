@@ -4,12 +4,12 @@ import { Btn, Panel, Pill, Stat, inputCls, type Tone } from './ui'
 import { CATALOGUE, allItems, guideline } from '../domain/guidelines'
 import { PROTOCOL_GAPS } from '../domain/manuscripts'
 import { coverage, flagOf, manuscriptOf, setTag, tagOf, toggleTagPara, STATUS_LABEL } from '../domain/project'
-import type { Status } from '../domain/types'
+import type { GuidelineId, Status } from '../domain/types'
 import { cn } from '@/lib/utils'
 
 const FLAG_TONE: Record<string, Tone> = { ok: 'green', weak: 'amber', missing: 'red', 'na-reason': 'amber', untagged: 'grey' }
 const FLAG_LABEL: Record<string, string> = { ok: 'ok', weak: 'check', missing: 'not reported', 'na-reason': 'reason?', untagged: 'to do' }
-const SHORT: Record<string, string> = { 'consort-2025': 'CONSORT', 'consort-abstracts': 'Abstract', 'consort-harms': 'Harms', 'spirit-2025': 'SPIRIT' }
+const SHORT: Record<string, string> = { 'consort-2025': 'CONSORT', 'consort-abstracts': 'Abstract', 'consort-harms': 'Harms', 'spirit-2025': 'SPIRIT', 'consort-ni': 'NI', 'consort-cluster': 'Cluster', strobe: 'STROBE', 'prisma-2020': 'PRISMA', 'prisma-s': 'PRISMA-S', 'stard-2015': 'STARD', care: 'CARE', 'arrive-2': 'ARRIVE', 'tripod-ai': 'TRIPOD+AI', 'cheers-2022': 'CHEERS', 'squire-2': 'SQUIRE', coreq: 'COREQ' }
 const STATUSES: Status[] = ['reported', 'partly', 'missing', 'na']
 
 export default function Workspace() {
@@ -70,7 +70,8 @@ export default function Workspace() {
         <Panel title="Checklist" sub="Items are paraphrased; the official wording is on each guideline's site. Tag the paragraphs that report an item, then choose its status. A rule flags tagged text that looks weak." right={
           <div className="flex flex-wrap gap-1">{(['all', 'todo', 'flagged'] as const).map((f) => <Btn key={f} tone={filter === f ? 'blue' : 'grey'} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : 'Flagged'}</Btn>)}</div>}>
           {!p!.mission && <div className="flex flex-wrap gap-2 items-center text-xs text-lab-text-muted">Guidelines:
-            {CATALOGUE.filter((g) => g.built).map((g) => <label key={g.id} className="flex items-center gap-1"><input type="checkbox" checked={p!.guidelines.includes(g.id)} onChange={(e) => act((q) => { q.guidelines = e.target.checked ? [...q.guidelines, g.id] : q.guidelines.filter((x) => x !== g.id) })} />{g.name}</label>)}
+            {p!.guidelines.filter((g) => guideline(g).built).map((g) => <label key={g} className="flex items-center gap-1"><input type="checkbox" checked onChange={() => act((q) => { q.guidelines = q.guidelines.filter((x) => x !== g) })} />{guideline(g).name}</label>)}
+            <select aria-label="Add a guideline" className="rounded border border-lab-line bg-lab-panel-strong px-1 py-0.5 text-xs" value="" onChange={(e) => { const v = e.target.value as GuidelineId; if (v) act((q) => { q.guidelines = [...q.guidelines, v] }) }}><option value="">Add a guideline…</option>{CATALOGUE.filter((g) => g.built && !p!.guidelines.includes(g.id)).map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}</select>
             {answer && <label className="flex items-center gap-1 ml-auto"><input type="checkbox" checked={key} onChange={(e) => setKey(e.target.checked)} />Show the answer key</label>}
           </div>}
           {p!.guidelines.filter((g) => guideline(g).built).map((gid) => {

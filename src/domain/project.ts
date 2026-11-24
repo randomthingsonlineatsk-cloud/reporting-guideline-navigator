@@ -1,7 +1,8 @@
 // Projects: one per manuscript being checked. A project holds the learner's tags, the abstracts
 // and the picker's answers; the manuscript itself comes from the library (or the learner's text).
 import type { GuidelineId, Manuscript, Progress, Project, Status, Tag } from './types'
-import { MANUSCRIPTS, fromText, manuscript, planted, VERDANT1_PLANTED } from './manuscripts'
+import { fromText } from './manuscripts'
+import { LIBRARY, byId, forMission } from './library'
 import { allItems, guideline, itemKey } from './guidelines'
 import { checkRule } from './rules'
 
@@ -11,7 +12,7 @@ const rid = () => Math.random().toString(36).slice(2, 10)
 export function learner(): Pick<Progress, 'name' | 'userId' | 'classId'> { return { name: '', userId: `L-${rid()}`, classId: '' } }
 
 export function createProject(manuscriptId: string, who: { userId: string; classId: string }, opts: { name?: string; ownText?: string; guidelines?: GuidelineId[]; mission?: Project['mission'] } = {}): Project {
-  const m = manuscriptId === 'own' ? null : manuscript(manuscriptId)
+  const m = manuscriptId === 'own' ? null : byId(manuscriptId)
   const now = new Date().toISOString()
   return {
     id: `P-${rid()}`, name: opts.name ?? m?.title ?? 'Your manuscript', userId: who.userId, classId: who.classId, createdUtc: now, updatedUtc: now,
@@ -22,13 +23,11 @@ export function createProject(manuscriptId: string, who: { userId: string; class
 /** The manuscript a project shows, with a mission's planted edits applied. */
 export function manuscriptOf(p: Project): Manuscript {
   if (p.manuscriptId === 'own') return fromText(p.ownText ?? '', p.guidelines)
-  const m = manuscript(p.manuscriptId)!
-  if (p.mission?.id === 'RG2') return planted(m, VERDANT1_PLANTED.edits)
-  return m
+  return forMission(byId(p.manuscriptId)!, p.mission?.id)
 }
 
 export function upgrade(p: Project): Project {
-  return { ...p, tags: p.tags ?? {}, abstracts: p.abstracts ?? [], history: p.history ?? [], classId: p.classId ?? '' }
+  return { ...p, tags: p.tags ?? {}, abstracts: p.abstracts ?? [], history: p.history ?? [], classId: p.classId ?? '', numbers: p.numbers ?? {} }
 }
 
 export const tagOf = (p: Project, key: string): Tag => p.tags[key] ?? { paras: [], status: '' }
@@ -94,7 +93,7 @@ export function importProject(text: string, who: { userId: string; classId: stri
   try { d = JSON.parse(text) } catch { throw new Error('This file is not a project file (it is not JSON).') }
   if (d.format !== FORMAT || !d.project) throw new Error('This file is not a Reporting Guideline Navigator project.')
   const p = upgrade(d.project)
-  if (p.manuscriptId !== 'own' && !MANUSCRIPTS.some((m) => m.id === p.manuscriptId)) throw new Error(`The project uses a manuscript this version does not have (${p.manuscriptId}).`)
+  if (p.manuscriptId !== 'own' && !LIBRARY.some((m) => m.id === p.manuscriptId)) throw new Error(`The project uses a manuscript this version does not have (${p.manuscriptId}).`)
   return { ...p, id: `P-${rid()}`, userId: who.userId, classId: who.classId, history: [...p.history, { utc: new Date().toISOString(), what: 'Imported' }] }
 }
 export { itemKey }

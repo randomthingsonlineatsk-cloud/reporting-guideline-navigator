@@ -20,8 +20,8 @@ const cell = (d: Outputs, id: string, label: string, col: number) => {
 }
 const nOf = (s: string) => s.split(' ')[0]
 
-type P = Para & { items: string[] }
-function build(meta: Omit<Manuscript, 'paras' | 'key'>, paras: P[]): Manuscript {
+export type P = Para & { items: string[] }
+export function build(meta: Omit<Manuscript, 'paras' | 'key'>, paras: P[]): Manuscript {
   const key: Record<string, string[]> = {}
   for (const p of paras) for (const k of p.items) (key[k] ??= []).push(p.id)
   return { ...meta, paras: paras.map(({ items: _i, ...p }) => { void _i; return p }), key }

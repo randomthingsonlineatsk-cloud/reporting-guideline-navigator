@@ -6,6 +6,7 @@
 // Versions checked on 24 November 2026: CONSORT 2025 (14 April 2025), SPIRIT 2025 (28 April 2025),
 // CONSORT for Abstracts (2008), CONSORT Harms (2022), and the others as listed in the catalogue.
 import type { Guideline, GuidelineId, Item } from './types'
+import { PHASE2 } from './guidelines2'
 
 const it = (section: string, list: [string, string, string?, ('new' | 'revised')?, boolean?][]): Item[] =>
   list.map(([id, text, look, change, ifApplicable]) => ({ id, section, text, look, change, ifApplicable }))
@@ -201,7 +202,7 @@ export const SPIRIT_2025: Guideline = {
 // Guidelines the picker names; their checklists come in Phase 2 (and PRISMA-ScR when its update
 // is published: Decision 5).
 const later = (id: GuidelineId, name: string, version: string, covers: string, url: string, licence: string, note?: string): Guideline => ({ id, name, version, covers, url, licence, built: false, items: [], note })
-export const CATALOGUE: Guideline[] = [
+const BASE: Guideline[] = [
   CONSORT_2025, CONSORT_ABSTRACTS, CONSORT_HARMS, SPIRIT_2025,
   later('consort-ni', 'CONSORT Non-inferiority and equivalence', '2012', 'Non-inferiority and equivalence trials', 'https://www.equator-network.org/reporting-guidelines/consort-non-inferiority/', 'Open access', 'Built on CONSORT 2010; the checklist comes in Phase 2.'),
   later('consort-cluster', 'CONSORT Cluster', '2012', 'Cluster randomised trials', 'https://www.equator-network.org/reporting-guidelines/consort-cluster/', 'Open access', 'Built on CONSORT 2010; the checklist comes in Phase 2.'),
@@ -224,6 +225,8 @@ export const CATALOGUE: Guideline[] = [
   later('trend', 'TREND', '2004', 'Non-randomised evaluations of behavioural and public health interventions', 'https://www.equator-network.org/reporting-guidelines/trend/', 'Open access'),
 ]
 
+// Phase 2 replaces the placeholders with full checklists.
+export const CATALOGUE: Guideline[] = BASE.map((g) => PHASE2.find((x) => x.id === g.id) ?? g)
 export const guideline = (id: GuidelineId) => CATALOGUE.find((g) => g.id === id)!
 export const itemKey = (g: GuidelineId, item: string) => `${g}:${item}`
 export const allItems = (ids: GuidelineId[]) => ids.flatMap((g) => guideline(g).items.map((i) => ({ g, i, key: itemKey(g, i.id) })))

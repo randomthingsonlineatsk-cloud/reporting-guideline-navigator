@@ -75,6 +75,8 @@ export interface Project {
   tags: Record<string, Tag>
   abstracts: Abstract[]
   mission?: { id: string; startedUtc: string; variant: number }
+  /** Missions RG8 and RG9: the numbers the learner marks as wrong (box id → true). */
+  numbers?: Record<string, boolean>
   history: { utc: string; what: string }[]
 }
 

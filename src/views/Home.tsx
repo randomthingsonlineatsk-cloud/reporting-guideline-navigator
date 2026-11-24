@@ -2,10 +2,12 @@ import { useRef, useState } from 'react'
 import { useStore } from '../state'
 import { useNav } from '../nav'
 import { Btn, Modal, Panel, Pill, TextArea, inputCls } from './ui'
-import { MANUSCRIPTS } from '../domain/manuscripts'
+import { LIBRARY } from '../domain/library'
+import { PLANTED_BY_MISSION } from '../domain/manuscripts2'
 import { createProject, exportProject, importProject } from '../domain/project'
 import { MISSIONS, available, passedMission } from '../domain/missions'
 import { download } from '../domain/store'
+import { docxToText } from '../domain/docximport'
 import { CATALOGUE, guideline } from '../domain/guidelines'
 import type { GuidelineId } from '../domain/types'
 
@@ -22,6 +24,7 @@ export default function Home({ onOpen }: { onOpen: () => void }) {
     const p = createProject(m.manuscript!, who, { name: `Mission ${id}: ${m.title}`, mission: { id, startedUtc: new Date().toISOString(), variant: 0 } })
     if (id === 'RG3') p.guidelines = ['consort-2025', 'consort-abstracts']
     if (id === 'RG2') p.guidelines = ['consort-2025']
+    if (PLANTED_BY_MISSION[id]) p.guidelines = PLANTED_BY_MISSION[id].guidelines as GuidelineId[]
     open(p); go(id === 'RG3' ? 'abstract' : 'workspace')
   }
   return (
@@ -30,7 +33,7 @@ export default function Home({ onOpen }: { onOpen: () => void }) {
         <div className="flex flex-wrap gap-2"><Btn tone="solid" onClick={() => setPage('picker')}>Which guideline? Open the picker</Btn><Btn tone="grey" onClick={() => setPage('learn')}>Learn the guidelines</Btn></div>
       </Panel>
 
-      <Panel title="Missions" sub="Scored by written rules against an answer key. Phase 1 has four; the rest arrive with the later phases of the build.">
+      <Panel title="Missions" sub="Scored by written rules against an answer key. Nine are open now; the rest arrive with the later phases of the build.">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {MISSIONS.map((m) => {
             const run = progress.missions[m.id], ok = available(m)
@@ -49,7 +52,7 @@ export default function Home({ onOpen }: { onOpen: () => void }) {
 
       <Panel title="Check a manuscript" sub="Open a manuscript from the library, or paste your own text and check it against a guideline.">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-2">
-          {MANUSCRIPTS.map((m) => (
+          {LIBRARY.map((m) => (
             <div key={m.id} className="rounded border border-lab-line bg-lab-panel-strong/50 p-3 space-y-1.5">
               <p className="text-sm font-medium">{m.title}</p>
               <p className="text-xs text-lab-text-muted">{m.study} · {m.kind === 'protocol' ? 'protocol' : m.journal}</p>
@@ -59,7 +62,7 @@ export default function Home({ onOpen }: { onOpen: () => void }) {
           ))}
           <div className="rounded border border-dashed border-lab-line p-3 space-y-1.5">
             <p className="text-sm font-medium">Your own text</p>
-            <p className="text-xs text-lab-text-muted">Paste a manuscript (plain text; a short line on its own is read as a heading). It stays in this browser.</p>
+            <p className="text-xs text-lab-text-muted">Paste a manuscript or read a .docx (a short line on its own is read as a heading). It stays in this browser.</p>
             <Btn tone="grey" onClick={() => setOwn(true)}>Paste text</Btn>
           </div>
         </div>
@@ -92,6 +95,7 @@ export default function Home({ onOpen }: { onOpen: () => void }) {
         <Modal title="Check your own text" onClose={() => setOwn(false)} wide>
           <label className="text-xs text-lab-text-muted block">Guideline<select className={inputCls} value={gl} onChange={(e) => setGl(e.target.value as GuidelineId)}>{CATALOGUE.filter((g) => g.built).map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}</select></label>
           <TextArea className="min-h-64" value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste the manuscript here. Separate paragraphs with a blank line." />
+          <label className="text-xs text-lab-text-muted block">Or read a file (.docx or .txt): <input type="file" accept=".docx,.txt,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onChange={async (e) => { const f = e.target.files?.[0]; e.target.value = ''; if (!f) return; try { setText(f.name.toLowerCase().endsWith('.docx') ? docxToText(new Uint8Array(await f.arrayBuffer())) : await f.text()) } catch (err) { setError((err as Error).message) } }} /></label>
           <Btn tone="solid" disabled={!text.trim()} onClick={() => { const guidelines: GuidelineId[] = gl === 'consort-2025' ? ['consort-2025', 'consort-abstracts'] : [gl]; open(createProject('own', who, { name: 'Your manuscript', ownText: text, guidelines })); setOwn(false); onOpen() }}>Check it</Btn>
         </Modal>
       )}

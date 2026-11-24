@@ -14,7 +14,7 @@ function Wizard() {
   const back = () => { const last = asked.at(-1); if (!last) return; const n = { ...a }; delete n[last.id]; setA(n) }
   return (
     <div className="grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-3 items-start">
-      <Panel title={q ? q.ask : 'The guidelines for this study'} sub={q ? `Question ${asked.length + 1}` : 'Each with the reason it applies. The checklists for CONSORT 2025, CONSORT for Abstracts, CONSORT Harms and SPIRIT 2025 are in this version; the others link to their official pages.'}>
+      <Panel title={q ? q.ask : 'The guidelines for this study'} sub={q ? `Question ${asked.length + 1}` : 'Each with the reason it applies. Those marked "checklist in the app" can be checked in the workspace; the others link to their official pages.'}>
         {q && <div className="grid gap-1.5" role="radiogroup" aria-label={q.ask}>{q.options.map((o) => <button key={o.value} role="radio" aria-checked={false} className="text-left rounded border border-lab-line px-3 py-2 text-sm hover:border-lab-fda hover:bg-lab-fda-soft/40" onClick={() => setA({ ...a, [q.id]: o.value })}>{o.label}</button>)}</div>}
         {rec && (
           <div className="space-y-2">
