@@ -141,6 +141,11 @@ The QR code is drawn with qrcode-generator (MIT).
 
 ## Phase 5: how publication teams work now
 
+A project's pages are grouped in three sections: **Manuscript** (checklist, abstract, authorship,
+disclosures, submission, claim sources, export), **Congress** (communication platform, poster,
+talk, visual and video) and **Plan** (publication plan, plain language summary).
+
+
 1. **Review and approval** (Publication plan page): each publication has versions, author review
    rounds with comments that must be resolved before a round closes, and sign-off by every author,
    a medical reviewer and a compliance reviewer. A new version cancels earlier sign-offs. The audit

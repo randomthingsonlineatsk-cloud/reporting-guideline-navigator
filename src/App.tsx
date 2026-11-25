@@ -25,6 +25,11 @@ import Study from './views/Study'
 import Classroom from './views/Classroom'
 
 const PAGES: { id: Page; label: string; key: string }[] = [{ id: 'home', label: 'Projects and missions', key: 'h' }, { id: 'picker', label: 'Guideline picker', key: 'g' }, { id: 'ethics', label: 'Ethics cases', key: 'e' }, { id: 'learn', label: 'Learn', key: 'l' }, { id: 'certificate', label: 'Certificate', key: 'c' }, { id: 'classroom', label: 'Classroom', key: 'r' }]
+const GROUPS: { id: string; label: string; views: View[] }[] = [
+  { id: 'manuscript', label: 'Manuscript', views: ['workspace', 'abstract', 'authorship', 'disclosures', 'submission', 'claims', 'export'] },
+  { id: 'congress', label: 'Congress', views: ['platform', 'poster', 'talk', 'extras'] },
+  { id: 'plan', label: 'Plan', views: ['plan', 'pls'] },
+]
 const VIEWS: { id: View; label: string; key: string }[] = [{ id: 'workspace', label: 'Checklist workspace', key: 'w' }, { id: 'abstract', label: 'Abstract', key: 'a' }, { id: 'authorship', label: 'Authorship', key: 'u' }, { id: 'disclosures', label: 'Disclosures and statements', key: 'd' }, { id: 'submission', label: 'Submission', key: 's' }, { id: 'claims', label: 'Claim sources', key: 'q' }, { id: 'platform', label: 'Communication platform', key: 'k' }, { id: 'poster', label: 'Poster', key: 'o' }, { id: 'talk', label: 'Congress talk', key: 't' }, { id: 'extras', label: 'Visual and video', key: 'v' }, { id: 'plan', label: 'Publication plan', key: 'p' }, { id: 'pls', label: 'Plain language summary', key: 'y' }, { id: 'export', label: 'Export', key: 'x' }]
 const SHORTCUTS: [string, string][] = [['?', 'Show these shortcuts'], ['g then h / g / e / l / c / r', 'Projects and missions, Guideline picker, Ethics cases, Learn, Certificate, Classroom'], ['g then w / a / u / d / s / q / k / o / t / v / p / y / x', 'In a project: Checklist workspace, Abstract, Authorship, Disclosures and statements, Submission, Claim sources, Communication platform, Poster, Congress talk, Visual and video, Publication plan, Plain language summary, Export'], ['j / k', 'In the workspace: next or previous checklist item'], ['Esc', 'Close a dialog']]
 const typing = (t: EventTarget | null) => t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))
@@ -65,7 +70,13 @@ function Shell() {
             {p ? <div className="flex flex-wrap items-center gap-2">{p.mission && <Pill tone="purple">{`Mission ${p.mission.id}`}</Pill>}<Btn tone="grey" onClick={() => { close(); setPage('home') }}>All projects</Btn><button className="text-xs text-lab-text-muted underline" onClick={() => setKeys(true)}>Shortcuts</button></div>
               : <nav className="flex flex-wrap gap-1" aria-label="Main">{PAGES.map((x) => <button key={x.id} onClick={() => setPage(x.id)} aria-current={page === x.id ? 'page' : undefined} className={tab(page === x.id)}>{x.label}</button>)}<button className="px-2 text-xs text-lab-text-muted underline" onClick={() => setKeys(true)}>Shortcuts</button></nav>}
           </div>
-          {p && <nav className="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto" aria-label="Project">{VIEWS.map((v) => <button key={v.id} onClick={() => go(v.id)} aria-current={view === v.id ? 'page' : undefined} className={`${tab(view === v.id)} whitespace-nowrap shrink-0`}>{v.label}</button>)}</nav>}
+          {p && (() => {
+            const g = GROUPS.find((x) => x.views.includes(view)) ?? GROUPS[0]
+            return <>
+              <nav className="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto" aria-label="Project sections">{GROUPS.map((x) => <button key={x.id} onClick={() => go(x.views[0])} aria-current={g.id === x.id ? 'true' : undefined} className={`${tab(g.id === x.id)} whitespace-nowrap shrink-0`}>{x.label}</button>)}</nav>
+              <nav className="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto border-t border-lab-line/50" aria-label="Project">{VIEWS.filter((v) => g.views.includes(v.id)).map((v) => <button key={v.id} onClick={() => go(v.id)} aria-current={view === v.id ? 'page' : undefined} className={`${tab(view === v.id)} whitespace-nowrap shrink-0 text-xs`}>{v.label}</button>)}</nav>
+            </>
+          })()}
         </header>
         {error && <div role="alert" className="max-w-7xl mx-auto w-full px-4 pt-3"><div className="rounded border border-lab-red/60 bg-lab-red-soft px-3 py-2 text-sm text-lab-red flex justify-between gap-2"><span>{error}</span><button onClick={() => setError('')} aria-label="Dismiss">✕</button></div></div>}
         <main className="max-w-7xl mx-auto w-full px-4 py-4 flex-1">
