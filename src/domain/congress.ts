@@ -47,7 +47,7 @@ export function checkTalk(t: Talk, lex: LexTerm[] = LEXICON_SEED): Rule[] {
     { id: 'C4', label: `The spoken notes fit the slot: ${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')} of ${c.slotMin}:00 at ${WPM} words a minute`, ok: sec <= lim && sec >= lim * 0.6, why: sec > lim ? 'Cut the notes; the chair will stop you.' : 'Write notes for each slide: the talk is too short.' },
     { id: 'C5', label: 'No slide over 40 words or 6 lines', ok: wordy.length === 0, why: wordy.map((x) => x.title || x.kind).join(', ') },
     { id: 'C6', label: 'Every number is in the study outputs', ok: wc(text) > 20 && unk.length === 0, why: unk.length ? `Not found: ${unk.join(', ')}` : '' },
-    { id: 'C7', label: 'No claim beyond the data, and the agreed terms', ok: claims.length === 0, why: [...new Set(claims.map((x) => x.text))].join(' ') },
+    { id: 'C7', label: 'No claim beyond the data, and the agreed terms', ok: wc(text) > 20 && claims.length === 0, why: [...new Set(claims.map((x) => x.text))].join(' ') },
     { id: 'C8', label: 'Results, safety and a conclusions slide', ok: k('results').length > 0 && k('safety').length > 0 && k('conclusion').some((x) => wc(x.body) > 5) },
     { id: 'C9', label: 'Acknowledgements: participants, investigators and the medical writing support with its funder', ok: /participant|patient/i.test(ack) && /investigator/i.test(ack) && /writing/i.test(ack) && /fund|paid/i.test(ack) },
     { id: 'C10', label: 'The trial registration number', ok: /NCT\d{8}/.test(text) },

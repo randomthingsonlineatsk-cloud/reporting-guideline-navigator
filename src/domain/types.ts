@@ -104,6 +104,8 @@ export interface Project {
   platform?: import('./platform').Platform
   aiLog?: import('./ailog').AiEntry[]
   talk?: import('./congress').Talk
+  claimLinks?: Record<string, import('./claims').Link>
+  refs?: import('./claims').Ref[]
   comms?: import('./congress').Comm[]
   extras?: { visual?: import('./extras').Visual; script?: import('./extras').Script }
   history: { utc: string; what: string }[]
