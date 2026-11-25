@@ -14,6 +14,7 @@ import Submission from './views/Submission'
 import Ethics from './views/Ethics'
 import MissionBar from './views/MissionBar'
 import Poster from './views/Poster'
+import Platform from './views/Platform'
 import Plan from './views/Plan'
 import PlsHandoff from './views/PlsHandoff'
 import Certificate from './views/Certificate'
@@ -21,8 +22,8 @@ import Study from './views/Study'
 import Classroom from './views/Classroom'
 
 const PAGES: { id: Page; label: string; key: string }[] = [{ id: 'home', label: 'Projects and missions', key: 'h' }, { id: 'picker', label: 'Guideline picker', key: 'g' }, { id: 'ethics', label: 'Ethics cases', key: 'e' }, { id: 'learn', label: 'Learn', key: 'l' }, { id: 'certificate', label: 'Certificate', key: 'c' }, { id: 'classroom', label: 'Classroom', key: 'r' }]
-const VIEWS: { id: View; label: string; key: string }[] = [{ id: 'workspace', label: 'Checklist workspace', key: 'w' }, { id: 'abstract', label: 'Abstract', key: 'a' }, { id: 'authorship', label: 'Authorship', key: 'u' }, { id: 'disclosures', label: 'Disclosures and statements', key: 'd' }, { id: 'submission', label: 'Submission', key: 's' }, { id: 'poster', label: 'Poster', key: 'o' }, { id: 'plan', label: 'Publication plan', key: 'p' }, { id: 'pls', label: 'Plain language summary', key: 'y' }, { id: 'export', label: 'Export', key: 'x' }]
-const SHORTCUTS: [string, string][] = [['?', 'Show these shortcuts'], ['g then h / g / e / l / c / r', 'Projects and missions, Guideline picker, Ethics cases, Learn, Certificate, Classroom'], ['g then w / a / u / d / s / o / p / y / x', 'In a project: Checklist workspace, Abstract, Authorship, Disclosures and statements, Submission, Poster, Publication plan, Plain language summary, Export'], ['j / k', 'In the workspace: next or previous checklist item'], ['Esc', 'Close a dialog']]
+const VIEWS: { id: View; label: string; key: string }[] = [{ id: 'workspace', label: 'Checklist workspace', key: 'w' }, { id: 'abstract', label: 'Abstract', key: 'a' }, { id: 'authorship', label: 'Authorship', key: 'u' }, { id: 'disclosures', label: 'Disclosures and statements', key: 'd' }, { id: 'submission', label: 'Submission', key: 's' }, { id: 'platform', label: 'Communication platform', key: 'k' }, { id: 'poster', label: 'Poster', key: 'o' }, { id: 'plan', label: 'Publication plan', key: 'p' }, { id: 'pls', label: 'Plain language summary', key: 'y' }, { id: 'export', label: 'Export', key: 'x' }]
+const SHORTCUTS: [string, string][] = [['?', 'Show these shortcuts'], ['g then h / g / e / l / c / r', 'Projects and missions, Guideline picker, Ethics cases, Learn, Certificate, Classroom'], ['g then w / a / u / d / s / k / o / p / y / x', 'In a project: Checklist workspace, Abstract, Authorship, Disclosures and statements, Submission, Communication platform, Poster, Publication plan, Plain language summary, Export'], ['j / k', 'In the workspace: next or previous checklist item'], ['Esc', 'Close a dialog']]
 const typing = (t: EventTarget | null) => t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))
 
 function Shell() {
@@ -65,7 +66,7 @@ function Shell() {
         </header>
         {error && <div role="alert" className="max-w-7xl mx-auto w-full px-4 pt-3"><div className="rounded border border-lab-red/60 bg-lab-red-soft px-3 py-2 text-sm text-lab-red flex justify-between gap-2"><span>{error}</span><button onClick={() => setError('')} aria-label="Dismiss">✕</button></div></div>}
         <main className="max-w-7xl mx-auto w-full px-4 py-4 flex-1">
-          {p ? <><MissionBar />{view === 'workspace' ? <Workspace key={p.id} /> : view === 'abstract' ? <AbstractView key={p.id} /> : view === 'authorship' ? <Authorship key={p.id} /> : view === 'disclosures' ? <Disclosures key={p.id} /> : view === 'submission' ? <Submission key={p.id} /> : view === 'poster' ? <Poster key={p.id} /> : view === 'plan' ? <Plan key={p.id} /> : view === 'pls' ? <PlsHandoff key={p.id} /> : <ExportView />}</>
+          {p ? <><MissionBar />{view === 'workspace' ? <Workspace key={p.id} /> : view === 'abstract' ? <AbstractView key={p.id} /> : view === 'authorship' ? <Authorship key={p.id} /> : view === 'disclosures' ? <Disclosures key={p.id} /> : view === 'submission' ? <Submission key={p.id} /> : view === 'platform' ? <Platform key={p.id} /> : view === 'poster' ? <Poster key={p.id} /> : view === 'plan' ? <Plan key={p.id} /> : view === 'pls' ? <PlsHandoff key={p.id} /> : <ExportView />}</>
             : page === 'picker' ? <Picker key={arg ?? 'w'} /> : page === 'ethics' ? <Ethics /> : page === 'learn' ? <Learn /> : page === 'certificate' ? <Certificate /> : page === 'classroom' ? <Classroom /> : page === 'study' ? <Study /> : <Home onOpen={() => go('workspace')} />}
         </main>
         {keys && <Modal title="Keyboard shortcuts" onClose={() => setKeys(false)}><table className="text-sm w-full"><tbody>{SHORTCUTS.map(([k, w]) => <tr key={k} className="border-t border-lab-line/60"><td className="py-1 pr-4 font-mono whitespace-nowrap">{k}</td><td>{w}</td></tr>)}</tbody></table></Modal>}

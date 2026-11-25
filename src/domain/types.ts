@@ -101,6 +101,7 @@ export interface Project {
   revisions?: import('./manuscriptpack').Revision[]
   /** Phase 5: review and approval for each publication in the plan (plan row id → review). */
   reviews?: Record<string, import('./review').PubReview>
+  platform?: import('./platform').Platform
   history: { utc: string; what: string }[]
 }
 
