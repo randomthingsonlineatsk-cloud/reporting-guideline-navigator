@@ -14,7 +14,7 @@ import { LESSONS, QUIZ_PASS } from './learn'
 export const APP_URL = 'https://randomthingsonlineatsk-cloud.github.io/reporting-guideline-navigator/'
 
 // ---------------------------------------------------------------- poster (RG13)
-export interface Poster { title: string; authors: string; sections: Record<string, string>; messages: string[]; figure: string; qr: string; disclosure: string; ack: string; encore: string; size: 'A0 portrait' | 'A0 landscape'; bodyPt: number; titlePt: number }
+export interface Poster { title: string; authors: string; sections: Record<string, string>; messages: string[]; figure: string; qr: string; disclosure: string; ack: string; encore: string; size: 'A0 portrait' | 'A0 landscape'; bodyPt: number; titlePt: number; figureAlt?: string }
 export const POSTER_SECTIONS = ['Background', 'Methods', 'Results', 'Conclusions'] as const
 export const POSTER_RULES = { congress: 'Lantern Dermatology Congress 2027 (fictional)', words: 800, minBody: 24, minTitle: 72, earlier: 'Nordbay Dermatology Meeting, March 2027 (fictional)' }
 export const blankPoster = (): Poster => ({ title: '', authors: '', sections: Object.fromEntries(POSTER_SECTIONS.map((s) => [s, ''])), messages: ['', '', ''], figure: '', qr: '', disclosure: '', ack: '', encore: '', size: 'A0 portrait', bodyPt: 28, titlePt: 90 })

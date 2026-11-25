@@ -102,6 +102,7 @@ export interface Project {
   /** Phase 5: review and approval for each publication in the plan (plan row id → review). */
   reviews?: Record<string, import('./review').PubReview>
   platform?: import('./platform').Platform
+  extras?: { visual?: import('./extras').Visual; script?: import('./extras').Script }
   history: { utc: string; what: string }[]
 }
 
