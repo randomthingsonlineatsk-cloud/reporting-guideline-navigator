@@ -103,6 +103,8 @@ export interface Project {
   reviews?: Record<string, import('./review').PubReview>
   platform?: import('./platform').Platform
   aiLog?: import('./ailog').AiEntry[]
+  talk?: import('./congress').Talk
+  comms?: import('./congress').Comm[]
   extras?: { visual?: import('./extras').Visual; script?: import('./extras').Script }
   history: { utc: string; what: string }[]
 }
