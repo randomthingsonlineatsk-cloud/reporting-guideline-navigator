@@ -99,6 +99,8 @@ export interface Project {
   statements?: import('./manuscriptpack').Statements
   titlePage?: import('./manuscriptpack').TitlePageInfo
   revisions?: import('./manuscriptpack').Revision[]
+  /** Phase 5: review and approval for each publication in the plan (plan row id → review). */
+  reviews?: Record<string, import('./review').PubReview>
   history: { utc: string; what: string }[]
 }
 
