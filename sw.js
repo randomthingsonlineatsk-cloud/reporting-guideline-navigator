@@ -1,6 +1,6 @@
 // Generated at build time by tools/sw-plugin.ts. Precaches the app for offline use.
-const CACHE = "rgn-mwv74i6m";
-const FILES = ["./","./index.html","./favicon.svg","./assets/index-CdoIR0sE.js","./assets/index-DQZKTcnZ.css"];
+const CACHE = "rgn-mww99lep";
+const FILES = ["./","./index.html","./favicon.svg","./assets/index-SyCA9evB.js","./assets/index-rRqmcuJC.css"];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k.startsWith("rgn-") && k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', (e) => {
