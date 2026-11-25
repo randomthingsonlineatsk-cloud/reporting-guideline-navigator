@@ -139,6 +139,35 @@ In every mission, the checks that would point at the answers stay hidden until t
 
 The QR code is drawn with qrcode-generator (MIT).
 
+## Phase 5: how publication teams work now
+
+1. **Review and approval** (Publication plan page): each publication has versions, author review
+   rounds with comments that must be resolved before a round closes, and sign-off by every author,
+   a medical reviewer and a compliance reviewer. A new version cancels earlier sign-offs. The audit
+   log is a hash chain, so an edited or deleted entry shows. Milestones (database lock, submission,
+   decision, publication) feed a metrics panel: acceptance rate, median days from lock to submission
+   and from submission to decision, and publications past their target.
+2. **Scientific communication platform**: five core statements, each tied to the study outputs
+   that support it, and a lexicon of agreed terms. Claim rules flag superlatives, "safe", a
+   "significant" the p-values do not back, overstated effects and numbers that are not in the
+   source. The poster messages, abstract conclusions, visual abstract and talk are each matched to
+   the closest core statement.
+3. **Visual and video**: a visual abstract drawn as SVG, a video abstract (3 minutes) or podcast
+   (10 minutes) script timed at 150 words a minute, and accessibility checks: alt text that gives
+   the main result, WCAG text contrast, 3:1 for lines and shapes, and colours that stay apart for
+   protanopia, deuteranopia and tritanopia (simulated with the Machado 2009 matrices).
+4. **AI use log** (Disclosures page): every use of an AI tool with its version, task, what went in,
+   and the named person who checked the output. Images of data, peer review, personal data and
+   confidential material in an unapproved tool are refused. The disclosure is written from the log
+   (writing help in the acknowledgements, research use in the methods) and fills the statements.
+5. **Congress talk**: slides with the disclosure slide second, a slide limit for the slot, spoken
+   notes timed at 130 words a minute, a rehearsal timer and a 16:9 export; an embargo checker for
+   press releases, posts and online publication against two fictional congresses' rules; and an
+   encore tracker built from the publication plan.
+6. **Claim sources**: every claim in the abstract, introduction, results and discussion tied to a
+   study output (its numbers checked), a document section or a reference with its page; the
+   reference list checked against fictional retraction notices.
+
 ## Your own manuscript pack (added after Phase 4)
 
 In any project that is not a mission:
@@ -177,6 +206,9 @@ In any project that is not a mission:
 - COPE: https://publicationethics.org/
 - GPP 2022 (Annals of Internal Medicine 2022), PubMed 36037471: https://pubmed.ncbi.nlm.nih.gov/36037471/
 - ISMPP, GPP 2022 guidelines: https://www.ismpp.org/gpp-2022
+- ISMPP, Artificial Intelligence (2023 position statement, September 2025 enhanced guidance): https://www.ismpp.org/artificial-intelligence-ai-
+- ISMPP, Enhanced Communications (publication extenders and accessibility): https://www.ismpp.org/enhanced-communications-digital-visual-and-accessibility-innovations
+- WCAG 2.2 contrast (1.4.3, 1.4.11): https://www.w3.org/TR/WCAG22/
 
 The full list, with the authorship, disclosure and ethics sources for the later phases, is in the
 app spec.
