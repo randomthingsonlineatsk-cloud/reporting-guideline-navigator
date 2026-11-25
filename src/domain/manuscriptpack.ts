@@ -93,7 +93,7 @@ export const blankStatements = (): Statements => ({ registry: 'ClinicalTrials.go
 const FORMATS: Record<Registry, RegExp> = { 'ClinicalTrials.gov': /^NCT\d{8}$/, 'EU CTIS': /^\d{4}-5\d{5}-\d{2}-\d{2}$/, CTRI: /^CTRI\/\d{4}\/\d{2,3}\/\d{6}$/, ISRCTN: /^ISRCTN\d{8}$/, Other: /\S{4,}/ }
 const pbNumber = (r: Registration, reg: Registry) => (reg === 'ClinicalTrials.gov' ? r.numbers.nct : reg === 'EU CTIS' ? r.numbers.euct : reg === 'CTRI' ? r.numbers.ctri : undefined)
 
-export function checkStatements(s: Statements, reg?: Registration, abstractText?: string): Rule[] {
+export function checkStatements(s: Statements, reg?: Registration, abstractText?: string, aiLogEntries = 0): Rule[] {
   const retro = !!s.registered && !!s.firstEnrolment && s.registered > s.firstEnrolment
   const num = s.number.trim(), pb = reg ? pbNumber(reg, s.registry) : undefined
   const abNum = abstractText ? (/NCT\d{8}|\d{4}-5\d{5}-\d{2}-\d{2}|CTRI\/\d{4}\/\d{2,3}\/\d{6}|ISRCTN\d{8}/.exec(abstractText)?.[0] ?? null) : undefined
@@ -106,6 +106,7 @@ export function checkStatements(s: Statements, reg?: Registration, abstractText?
     { id: 'S5', label: 'The abstract gives the same number', ok: abNum === undefined || abNum === num, level: 'error', why: abNum === null ? 'The abstract has no registration number.' : `The abstract gives ${abNum}.` },
     { id: 'S6', label: 'Data sharing: says what is shared, when, with whom and how (not "undecided")', ok: ds.length > 40 && !/\b(undecided|not (yet )?decided|to be (decided|determined)|tbd|will decide)\b/i.test(ds) && /\b(no|not|will|available|shared?|request|repository)\b/i.test(ds), level: 'error', why: /undecided|not (yet )?decided|to be (decided|determined)|tbd/i.test(ds) ? 'The ICMJE does not accept "undecided": state the plan, even if it is that data will not be shared, and why.' : 'Say whether individual participant data will be shared, which data, from when, with whom, and by what route.' },
     { id: 'S7', label: 'AI use disclosed: the tool and what it was used for', ok: !s.aiUsed || (s.aiTool.trim().length > 1 && s.aiHow.trim().length > 10), level: 'error' },
+    { id: 'S7b', label: 'Matches the AI use log', ok: aiLogEntries === 0 || s.aiUsed, level: 'error', why: `The AI use log has ${aiLogEntries} entr${aiLogEntries === 1 ? 'y' : 'ies'}; disclose them (Fill from the AI use log).` },
     { id: 'S8', label: 'No AI tool listed as an author', ok: !s.aiAuthor, level: 'error', why: 'AI tools cannot be authors: they cannot take responsibility or approve the work. Disclose the use and keep the authors responsible.' },
     { id: 'S9', label: 'Funding: the funder, the grant if any, and the funder\'s role', ok: s.funding.trim().length > 20 && /role|design|no part|not involved|involved/i.test(s.funding), level: 'error' },
     { id: 'S10', label: 'Ethics: the committee that approved it and consent', ok: /committee|board|IRB|IEC|REC/i.test(s.ethics) && /consent/i.test(s.ethics), level: 'error' },

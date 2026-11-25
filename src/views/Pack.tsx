@@ -5,6 +5,7 @@ import { Btn, Panel, Pill, TextArea, inputCls } from './ui'
 import type { Project } from '../domain/types'
 import { RG4_CONTRIBUTORS } from '../domain/phase3'
 import { download } from '../domain/store'
+import { INPUTS, TASKS, blankEntry, checkLog, disclosure, type AiEntry } from '../domain/ailog'
 import {
   GROUP_MODES, blankByline, blankRevision, blankStatements, blankTitlePage, bylineText, checkByline, checkRevision, checkRevisions, checkStatements, checkTitlePage,
   orderedAuthors, readProtocolBuilder, revisionHtml, revisionsFrom, statementsText, titlePageHtml, wordCounts, type Byline, type Registry, type Revision, type Rule, type Statements,
@@ -63,7 +64,7 @@ export function StatementsPanel() {
   const s = p.statements ?? blankStatements()
   const upd = (fn: (x: Statements) => void) => act((q) => { q.statements ??= blankStatements(); fn(q.statements) })
   const ab = p.abstracts.find((a) => a.text.trim())?.text
-  const rules = checkStatements(s, p.registration, ab)
+  const rules = checkStatements(s, p.registration, ab, p.aiLog?.length ?? 0)
   const coi = 'as declared on each author\'s ICMJE disclosure form (see the forms submitted with the article).'
   const f = (k: keyof Statements, label: string, ph = '', area = false) => <label className="block text-xs text-lab-text-muted">{label}{area ? <TextArea className="min-h-16" value={String(s[k])} onChange={(e) => upd((x) => { (x as unknown as Record<string, string>)[k] = e.target.value })} placeholder={ph} /> : <input className={inputCls} value={String(s[k])} onChange={(e) => upd((x) => { (x as unknown as Record<string, string>)[k] = e.target.value })} placeholder={ph} />}</label>
   return (
@@ -146,6 +147,47 @@ export function RevisionPanel() {
         })}
       </div>
       <Btn tone="grey" onClick={() => upd((x) => { x.push(blankRevision(x.length)) })}>Add a row</Btn>
+    </Panel>
+  )
+}
+
+export function AiLogPanel() {
+  const { p, act } = usePack()
+  const cast = p.manuscriptId === 'glyde-3'
+  const people = cast ? RG4_CONTRIBUTORS.map((x) => x.name.replace(/,.*$/, '')) : (p.people ?? []).map((x) => x.name)
+  const log = p.aiLog ?? []
+  const upd = (fn: (x: AiEntry[]) => void) => act((q) => { q.aiLog ??= []; fn(q.aiLog) })
+  const c = checkLog(log, people), d = disclosure(log)
+  return (
+    <Panel title="AI use log" sub="Every use of an AI tool on this manuscript: the tool and version, what it did and where, what went into it, and the named person who checked the output. The disclosure is written from the log." right={<div className="flex gap-1 items-center"><Pill tone={log.length && c.ok ? 'green' : log.length ? 'amber' : 'grey'}>{log.length ? (c.ok ? `${log.length} entries, all checked` : `${c.open} open`) : 'no entries'}</Pill><Btn tone="grey" disabled={!log.length} onClick={() => act((q) => { q.statements ??= blankStatements(); q.statements.aiUsed = true; q.statements.aiTool = d.tools; q.statements.aiHow = d.uses })}>Fill the statements from the log</Btn></div>}>
+      <div className="space-y-2">
+        {log.map((e, i) => {
+          const rules = c.per[i].rules, set = (fn: (x: AiEntry) => void) => upd((x) => { fn(x[i]) })
+          const t = (k: keyof AiEntry, label: string, type = 'text', ph = '') => <label className="block text-[11px] text-lab-text-muted">{label}<input type={type} className={inputCls} value={String(e[k])} placeholder={ph} onChange={(ev) => set((x) => { (x as unknown as Record<string, string>)[k] = ev.target.value })} /></label>
+          return (
+            <div key={e.id} className={`rounded border p-2 space-y-1.5 ${rules.every((r) => r.ok) ? 'border-lab-line' : 'border-lab-amber/60'}`}>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-1.5">
+                {t('date', 'Date used', 'date')}{t('tool', 'Tool', 'text', 'A general AI writing assistant')}{t('version', 'Version or model')}
+                <label className="block text-[11px] text-lab-text-muted">Task<select className={inputCls} value={e.task} onChange={(ev) => set((x) => { x.task = ev.target.value as AiEntry['task'] })}>{TASKS.map((k) => <option key={k.id} value={k.id}>{k.label}</option>)}</select></label>
+                {t('section', 'Where in the manuscript', 'text', 'the Discussion')}
+                <label className="block text-[11px] text-lab-text-muted">What went into it<select className={inputCls} value={e.input} onChange={(ev) => set((x) => { x.input = ev.target.value as AiEntry['input'] })}>{INPUTS.map((k) => <option key={k.id} value={k.id}>{k.label}</option>)}</select></label>
+                <label className="block text-[11px] text-lab-text-muted">Checked by<select className={inputCls} value={e.checkedBy} onChange={(ev) => set((x) => { x.checkedBy = ev.target.value })}><option value="">—</option>{people.map((n) => <option key={n}>{n}</option>)}</select></label>
+                {t('checkedDate', 'Checked on', 'date')}
+              </div>
+              {t('purpose', 'What it did')}{t('verification', 'How the output was checked')}
+              <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={e.approved} onChange={(ev) => set((x) => { x.approved = ev.target.checked })} />A tool your organisation has approved for confidential material</label>
+              <div className="flex justify-between items-start gap-2"><Rules rules={rules} /><Btn tone="grey" onClick={() => upd((x) => { x.splice(i, 1) })}>Remove</Btn></div>
+            </div>
+          )
+        })}
+        <Btn tone="grey" onClick={() => upd((x) => { x.push(blankEntry(x.length)) })}>Add a use</Btn>
+        {people.length === 0 && <p className="text-xs text-lab-text-muted">Add the contributors on the Authorship page so the checker can be chosen.</p>}
+      </div>
+      {log.length > 0 && <div className="text-sm space-y-1">
+        {d.acknowledgements && <p><b>Acknowledgements:</b> {d.acknowledgements}</p>}
+        {d.methods && <p><b>Methods:</b> {d.methods}</p>}
+        <Btn tone="grey" onClick={() => download('ai-use-log.json', JSON.stringify({ format: 'reporting-guideline-navigator/ai-use-log', schema: 1, project: p.name, entries: log, disclosure: d }, null, 2))}>AI use log (.json)</Btn>
+      </div>}
     </Panel>
   )
 }
